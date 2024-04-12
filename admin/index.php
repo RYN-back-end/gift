@@ -4,7 +4,7 @@ checkAdminLogin();
 
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 
 <head>
     <meta charset="utf-8"/>
@@ -12,7 +12,7 @@ checkAdminLogin();
     <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png">
     <link rel="icon" type="image/png" href="../favicon.svg">
     <title>
-        Gift Genius | Orders
+        Gift Genius | الطلبات
     </title>
     <!--     Fonts and icons     -->
     <?php
@@ -21,7 +21,7 @@ checkAdminLogin();
 
 </head>
 
-<body class="g-sidenav-show  bg-gray-200">
+<body class="g-sidenav-show rtl  bg-gray-200" >
 <?php
 include 'layout/inc/sidebar.php'
 ?>
@@ -37,7 +37,7 @@ include 'layout/inc/sidebar.php'
                 <div class="card my-4">
                     <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                         <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                            <h6 class="text-white text-capitalize ps-3">Orders</h6>
+                            <h6 class="text-white text-capitalize ps-3">الطلبات</h6>
                         </div>
                     </div>
                     <div class="card-body px-0 pb-2">

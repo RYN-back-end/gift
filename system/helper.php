@@ -81,73 +81,25 @@ if (!function_exists('checkAdminLogin')) {
         }
     }
 }
-if (!function_exists('checkDriverLogin')) {
-    function checkDriverLogin()
+if (!function_exists('checkEmployeeLogin')) {
+    function checkEmployeeLogin()
     {
         session_start();
-        if (!isset($_SESSION['driver']['loggedin'])) {
-            if (!str_contains($_SERVER['REQUEST_URI'], 'driver/login.php')) {
+        if (!isset($_SESSION['employee']['loggedin'])) {
+            if (!str_contains($_SERVER['REQUEST_URI'], 'employee/login.php')) {
                 header('Location: login.php');
             }
 //            die('39');
-        } elseif (str_contains($_SERVER['REQUEST_URI'], 'driver/login.php')) {
+        } elseif (str_contains($_SERVER['REQUEST_URI'], 'employee/login.php')) {
             header('Location: index.php');
         }
 //        die('44');
 
-        if (isset($_SESSION['driver']['loggedin'])) {
-            $checkMyUserSql = "SELECT * FROM delivery WHERE delivery_id = '{$_SESSION['driver']['delivery_id']}'";
+        if (isset($_SESSION['employee']['loggedin'])) {
+            $checkMyUserSql = "SELECT * FROM employees WHERE id = '{$_SESSION['employee']['id']}'";
             $checkMyUserResult = runQuery($checkMyUserSql);
-            if ($checkMyUserResult->num_rows <= 0 && $_SESSION['driver']['loggedin'] == true) {
-                $_SESSION['driver'] = [];
-                header('Location: login.php');
-            }
-        }
-    }
-}
-if (!function_exists('checkRestaurantLogin')) {
-    function checkRestaurantLogin()
-    {
-        session_start();
-        if (!isset($_SESSION['restaurant']['loggedin'])) {
-            if (!str_contains($_SERVER['REQUEST_URI'], 'restaurant/login.php')) {
-                header('Location: login.php');
-            }
-//            die('39');
-        } elseif (str_contains($_SERVER['REQUEST_URI'], 'restaurant/login.php')) {
-            header('Location: index.php');
-        }
-//        die('44');
-
-        if (isset($_SESSION['restaurant']['loggedin'])) {
-            $checkMyUserSql = "SELECT * FROM restaurants WHERE restaurant_id = '{$_SESSION['restaurant']['restaurant_id']}'";
-            $checkMyUserResult = runQuery($checkMyUserSql);
-            if ($checkMyUserResult->num_rows <= 0 && $_SESSION['restaurant']['loggedin'] == true) {
-                $_SESSION['restaurant'] = [];
-                header('Location: login.php');
-            }
-        }
-    }
-}
-if (!function_exists('checkCompanyLogin')) {
-    function checkCompanyLogin()
-    {
-        session_start();
-        if (!isset($_SESSION['company']['loggedin'])) {
-            if (!str_contains($_SERVER['REQUEST_URI'], 'company/login.php')) {
-                header('Location: login.php');
-            }
-//            die('39');
-        } elseif (str_contains($_SERVER['REQUEST_URI'], 'company/login.php')) {
-            header('Location: index.php');
-        }
-//        die('44');
-
-        if (isset($_SESSION['company']['loggedin'])) {
-            $checkMyUserSql = "SELECT * FROM companies WHERE id = '{$_SESSION['company']['id']}'";
-            $checkMyUserResult = runQuery($checkMyUserSql);
-            if ($checkMyUserResult->num_rows <= 0 && $_SESSION['company']['loggedin'] == true) {
-                $_SESSION['company'] = [];
+            if ($checkMyUserResult->num_rows <= 0 && $_SESSION['employee']['loggedin'] == true) {
+                $_SESSION['employee'] = [];
                 header('Location: login.php');
             }
         }
