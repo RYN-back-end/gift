@@ -38,13 +38,13 @@ if (!function_exists('checkLogin')) {
     {
         session_start();
         if (!isset($_SESSION['user']['loggedin'])) {
-            if (!str_contains($_SERVER['REQUEST_URI'], 'signIn.php') &&
-                !str_contains($_SERVER['REQUEST_URI'], 'signUp.php')) {
-                header('Location: signIn.php');
+            if (!str_contains($_SERVER['REQUEST_URI'], 'login.php') &&
+                !str_contains($_SERVER['REQUEST_URI'], 'register.php')) {
+                header('Location: login.php');
             }
-        } elseif (str_contains($_SERVER['REQUEST_URI'], 'signIn.php') ||
-            str_contains($_SERVER['REQUEST_URI'], 'signUp.php')) {
-            header('Location: home.php');
+        } elseif (str_contains($_SERVER['REQUEST_URI'], 'login.php') ||
+            str_contains($_SERVER['REQUEST_URI'], 'register.php')) {
+            header('Location: index.php');
         }
 
         if (isset($_SESSION['user']['loggedin'])) {

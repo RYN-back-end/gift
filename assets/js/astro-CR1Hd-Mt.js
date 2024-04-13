@@ -206,7 +206,7 @@ function validateArgs(args) {
   return true;
 }
 function baseCreateComponent(cb, moduleId, propagation) {
-  const name = moduleId?.split("/").pop()?.replace(".astro", "") ?? "";
+  const name = moduleId?.split("index.php").pop()?.replace(".astro", "") ?? "";
   const fn = (...args) => {
     if (!validateArgs(args)) {
       throw new AstroError({
