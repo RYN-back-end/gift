@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 13, 2024 at 03:28 PM
+-- Generation Time: Apr 13, 2024 at 03:33 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -170,7 +170,7 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `title`, `image`, `price`, `qty`, `description`, `category_id`, `sub_category_id`) VALUES
-(1, 'منتج', 'products/84520520.png', 20, 15, 'منتج تجريبي', 2, 2);
+(1, 'منتج', 'uploads/products/pro-B0GtClVE_Z1nvIT8.webp', 20, 15, 'منتج تجريبي', 2, 2);
 
 -- --------------------------------------------------------
 
