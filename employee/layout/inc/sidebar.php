@@ -17,27 +17,11 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white " href="categories.php">
+                <a class="nav-link text-white " href="products.php">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">table_view</i>
                     </div>
-                    <span class="nav-link-text ms-1">الأقسام الرئيسية</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white " href="subCategories.php">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">receipt_long</i>
-                    </div>
-                    <span class="nav-link-text ms-1">الأقسام الفرعية</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white " href="employees.php">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">group</i>
-                    </div>
-                    <span class="nav-link-text ms-1">الموظفيين</span>
+                    <span class="nav-link-text ms-1">المنتجات</span>
                 </a>
             </li>
 

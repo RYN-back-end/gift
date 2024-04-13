@@ -1,6 +1,6 @@
 <?php
 require('../system/helper.php');
-checkAdminLogin();
+checkEmployeeLogin();
 if (isset($_POST['email']) && isset($_POST['password'])) {
     $sql = "SELECT * FROM `employees` WHERE `email` =  '{$_POST['email']}'";
     $data = runQuery($sql);

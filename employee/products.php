@@ -1,6 +1,6 @@
 <?php
 require('../system/helper.php');
-checkAdminLogin();
+checkEmployeeLogin();
 
 $selectCategoriesSql = 'SELECT * FROM main_categories order by id DESC';
 $selectCategoriesResult = runQuery($selectCategoriesSql);
@@ -12,6 +12,15 @@ $selectCategoriesResult2 = runQuery($selectCategoriesSql2);
 
 $selectSubCategoriesSql = 'SELECT * FROM sub_categories order by id DESC';
 $selectSubCategoriesResult = runQuery($selectSubCategoriesSql);
+
+$subCategoriesArray = [];
+if ($selectSubCategoriesResult->num_rows > 0) {
+    while ($row = $selectSubCategoriesResult->fetch_assoc()) {
+        $subCategoriesArray[] = $row;
+    }
+}
+// Encode the PHP array into JSON format
+$subCategoriesJson = json_encode($subCategoriesArray);
 
 
 if (isset($_POST['method']) && $_POST['method'] == 'create') {
@@ -36,7 +45,7 @@ if (isset($_GET['method']) && $_GET['method'] == 'DELETE' && isset($_GET['id']))
 
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 
 <head>
     <meta charset="utf-8"/>
@@ -44,7 +53,7 @@ if (isset($_GET['method']) && $_GET['method'] == 'DELETE' && isset($_GET['id']))
     <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png">
     <link rel="icon" type="image/png" href="../favicon.svg">
     <title>
-        Gift Genius | الأقسام الفرعية
+        Gift Genius | المنتجات
     </title>
     <?php
     include 'layout/assets/css.php';
@@ -52,7 +61,7 @@ if (isset($_GET['method']) && $_GET['method'] == 'DELETE' && isset($_GET['id']))
 
 </head>
 
-<body class="g-sidenav-show  bg-gray-200">
+<body class="g-sidenav-show rtl bg-gray-200">
 <?php
 include 'layout/inc/sidebar.php'
 ?>
@@ -68,25 +77,25 @@ include 'layout/inc/sidebar.php'
                 <div class="card my-4">
                     <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                         <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                            <h6 class="text-white text-capitalize ps-3">الأقسام الفرعية</h6>
+                            <h6 class="text-white text-capitalize ps-3">المنتجات</h6>
                         </div>
                     </div>
-                    <?php echo indexButtons('Add Category') ?>
+                    <?php echo indexButtons('إضافة منتج') ?>
                     <div class="card-body px-0 pb-2">
                         <div class="table-responsive p-0">
                             <table class="table align-items-center mb-0">
                                 <thead>
                                 <tr>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        id
+                                        #
                                     </th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Name
+                                        اسم المنتج
                                     </th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Main Category
+                                        القسم الرئيسي
                                     </th>
-                                    <th class="text-secondary opacity-7">Actions</th>
+                                    <th class="text-secondary opacity-7">العمليات</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -121,7 +130,8 @@ include 'layout/inc/sidebar.php'
                                                                 aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <form action="" id="EditForm<?php echo $row['id'] ?>" method="post">
+                                                        <form action="" id="EditForm<?php echo $row['id'] ?>"
+                                                              method="post">
                                                             <input name="method" value="edit" type="hidden">
                                                             <input name="id" value="<?php echo $row['id'] ?>"
                                                                    type="hidden">
@@ -147,7 +157,7 @@ include 'layout/inc/sidebar.php'
                                                                             <?php if ($selectCategoriesResult->num_rows > 0) {
                                                                                 while ($subRow = $selectCategoriesResult->fetch_assoc()) {
                                                                                     ?>
-                                                                                    <option value="<?php echo $subRow['id'] ?>" <?php echo $subRow['id'] == $row['main_id']?'selected':''?>><?php echo $subRow['name'] ?></option>
+                                                                                    <option value="<?php echo $subRow['id'] ?>" <?php echo $subRow['id'] == $row['main_id'] ? 'selected' : '' ?>><?php echo $subRow['name'] ?></option>
                                                                                     <?php
                                                                                 }
                                                                             }
@@ -163,7 +173,8 @@ include 'layout/inc/sidebar.php'
                                                         <button type="button" class="btn btn-secondary"
                                                                 data-bs-dismiss="modal">Close
                                                         </button>
-                                                        <button type="submit" form="EditForm<?php echo $row['id'] ?>" class="btn btn-primary">
+                                                        <button type="submit" form="EditForm<?php echo $row['id'] ?>"
+                                                                class="btn btn-primary">
                                                             Save
                                                         </button>
                                                     </div>
@@ -189,10 +200,10 @@ include 'layout/inc/sidebar.php'
 
     <!-- Modal -->
     <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog ">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add Sub Category</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">إضافة منتج</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -201,16 +212,30 @@ include 'layout/inc/sidebar.php'
                         <div class="row">
                             <div class="col-6">
                                 <div class="mb-2">
-                                    <label class="form-label">Name</label>
-                                    <input class="form-control border-1" type="text" required name="name"
-                                           placeholder="Name">
+                                    <label class="form-label">اسم المنتج</label>
+                                    <input class="form-control border-1" type="text" required name="title"
+                                           placeholder="اسم المنتج">
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-3">
                                 <div class="mb-2">
-                                    <label class="form-label">Main Category</label>
-                                    <select class="form-control" required name="main_id">
-                                        <option value="" selected disabled>Chose Main Category</option>
+                                    <label class="form-label">السعر</label>
+                                    <input class="form-control border-1" type="number" required name="price"
+                                           placeholder="السعر">
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="mb-2">
+                                    <label class="form-label">الكمية</label>
+                                    <input class="form-control border-1" type="number" required name="qty"
+                                           placeholder="الكمية">
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="mb-2">
+                                    <label class="form-label">القسم الرئيسي</label>
+                                    <select class="form-control" required id="category_id_create" name="category_id">
+                                        <option value="" selected disabled>اختر القسم الرئيسي</option>
 
                                         <?php if ($selectCategoriesResult2->num_rows > 0) {
                                             while ($SubRow2 = $selectCategoriesResult2->fetch_assoc()) {
@@ -223,6 +248,31 @@ include 'layout/inc/sidebar.php'
                                     </select>
                                 </div>
                             </div>
+                            <div class="col-3">
+                                <div class="mb-2">
+                                    <label class="form-label">القسم الفرعي</label>
+                                    <select class="form-control" required id="sub_category_id_create"
+                                            name="sub_category_id">
+                                        <option value="" selected disabled>اختر القسم الرئيسي اولاً</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="mb-2">
+                                    <label class="form-label">القسم الفرعي</label>
+                                    <select class="form-control" required id="sub_category_id_create"
+                                            name="sub_category_id">
+                                        <option value="" selected disabled>اختر القسم الرئيسي اولاً</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="mb-2">
+                                    <label class="form-label">الوصف</label>
+                                    <textarea name="description" class="form-control" required ></textarea>
+                                </div>
+                            </div>
+
                         </div>
                     </form>
                 </div>
@@ -239,6 +289,35 @@ include 'layout/inc/sidebar.php'
 <?php
 include 'layout/assets/js.php';
 ?>
+<script src="./assets/js/jquery-3.7.1.js"></script>
+
+<script>
+    var arrayOfObjects = <?php echo $subCategoriesJson; ?>;
+    $(document).on('change', '#category_id_create', function () {
+        var id = $(this).val()
+        var selectElement = document.getElementById('sub_category_id_create');
+
+        var filteredArray = $.grep(arrayOfObjects, function (obj) {
+            if (obj.main_id !== id) {
+                return false;
+            }
+            return true;
+        });
+        if (filteredArray.length > 0) {
+            var newOption = "<option>إختر القسم الفرعي</option>"
+
+        } else {
+            var newOption = "<option>لا يوجد بيانات إختر قسم اخر</option>"
+        }
+        selectElement.innerHTML = newOption
+        filteredArray.forEach(function (option) {
+            var optionElement = document.createElement('option');
+            optionElement.value = option.id;
+            optionElement.textContent = option.name;
+            selectElement.appendChild(optionElement);
+        });
+    })
+</script>
 
 </body>
 
