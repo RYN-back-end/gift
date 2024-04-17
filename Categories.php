@@ -2,7 +2,7 @@
 require('system/helper.php');
 $selectOtherProductsSql = "SELECT * FROM products WHERE sub_category_id =  '{$_GET['id']}'";
 $selectOtherProductsResult = runQuery($selectOtherProductsSql);
-$categorySql = "SELECT * FROM sub_categories WHERE main_id =  '{$_GET['id']}'";
+$categorySql = "SELECT * FROM sub_categories WHERE id =  '{$_GET['id']}'";
 $selectCategoryResult = runQuery($categorySql);
 $category = $selectCategoryResult->fetch_assoc();
 
