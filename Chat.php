@@ -145,7 +145,7 @@ include 'layout/inc/header.php';
             type: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer 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'
+                'Authorization': 'حطية هنا'
             },
             data: JSON.stringify({
                 'model': 'gpt-3.5-turbo',
