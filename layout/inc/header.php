@@ -74,7 +74,8 @@ $selectCategoriesResult = runQuery($selectCategoriesSql);
                 <li class="nav-items pr-8"><a class="fw-500 nav-link  relative" href="product.php"> منتجاتنا </a></li>
                 <li class="nav-items pr-8"><a class="fw-500 nav-link  relative" href="ContactUs.php"> تواصل معنا </a>
                 </li>
-
+                <li class="nav-items pr-8"><a class="fw-500 nav-link  relative" href="Chat.php"> اقتراح الهدايا </a>
+                </li>
                 <?php
                 if ($selectCategoriesResult->num_rows > 0) {
                     while ($row = $selectCategoriesResult->fetch_assoc()) {
@@ -110,25 +111,6 @@ $selectCategoriesResult = runQuery($selectCategoriesSql);
                     }
                 }
                 ?>
-
-                <!--                <li class="dropdown nav-items pr-8 relative d-flex items-center" id="drop1">-->
-                <!--                    <span-->
-                <!--                            class="fw-500 nav-link relative"> رجالي</span>-->
-                <!--                    <svg width="24" height="24" viewBox="0 0 24 24" class="pr-1" id="arrowDropDown"-->
-                <!--                         data-icon="arrow-down">-->
-                <!--                        <use xlink:href="#ai:local:arrow-down"></use>-->
-                <!--                    </svg>-->
-                <!--                    <ul class="dropdown-content round-6 overflow-hidden d-none right-0 absolute">-->
-                <!--                        <li class=""><a href="Categories.html" class="fw-500 px-7 py-4 relative">-->
-                <!--                                اعياد الميلاد</a></li>-->
-                <!--                        <li class=""><a href="Categories.html" class="fw-500 px-7 py-4 relative">-->
-                <!--                                اعياد الجواز</a></li>-->
-                <!--                        <li class=""><a href="Categories.html" class="fw-500 px-7 py-4 relative">-->
-                <!--                                عيد الحب</a></li>-->
-                <!--                        <li class=""><a href="Categories.html" class="fw-500 px-7 py-4 relative">-->
-                <!--                                عيد الام</a></li>-->
-                <!--                    </ul>-->
-                <!--                </li>-->
 
 
             </ul>
