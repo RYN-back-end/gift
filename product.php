@@ -45,21 +45,32 @@ include 'layout/inc/header.php';
                 <?php if ($selectProductsResult->num_rows > 0) {
                     while ($row = $selectProductsResult->fetch_assoc()) {
                         ?>
-                        <div class="col-3-lg col-6-md col-12-sm"><a
-                                    href="productDetails.php?id=<?php echo $row['id'] ?>">
-                                <div class="card round-8 d-flex">
-                                    <div class="top mx-auto"><img src="<?php echo $row['image'] ?>"
-                                                                  alt="img for product" class="img-cover" width="450"
-                                                                  height="450" loading="lazy" decoding="async"></div>
-                                    <div class="body mr-1">
-                                        <div class="pb-5"><h3 class="fw-700 pb-1 fs-20"><?php echo $row['title'] ?> </h3>
-                                            <p class="price  fw-700 fs-28"> <?php echo $row['price'] ?> ر.س </p></div>
-                                        <p class="des fs-16 pb-6 fw-500 line-normal"> <?php echo $row['description'] ?> </p>
-                                        <button class="btn btn-skew booking-btn mb-1 py-3 round-6 mx-auto d-flex items-center justify-center fs-18 fw-500"
-                                                type="button" aria-label=" التفاصيل"> التفاصيل
-                                        </button>
-                                    </div> <!-- end --> </div>
-                            </a></div>
+                        <div class="col-3-lg col-6-md col-12-sm">
+                            <a href="productDetails.php?id=<?php echo $row['id'] ?>">
+                                <div class='product-card'>
+                                    <img src='<?php echo $row['image'] ?>'
+                                         class='card__img'>
+                                    <h2 class='card__title'><?php echo $row['title'] ?></h2>
+                                    <div class='card__content'>
+                                        <div class='card__sizeContainer'>
+                                            <p class="card__sizeTitle price fw-700 fs-28"> <?php echo $row['price'] ?>
+                                                ر.س </p>
+                                        </div>
+                                        <div class='card__colorContainer'>
+                                            <p class='card__colorTitle'>
+                                                <?php
+                                                $description = $row['description'];
+                                                echo strlen($description) > 120 ? substr($description, 0, 120) . '...' : $description;
+                                                ?>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <button class="card__link btn btn-skew booking-btn round-8 fs-18 fw-500"
+                                            type="button" aria-label=" التفاصيل"> التفاصيل
+                                    </button>
+                                </div>
+                            </a>
+                        </div>
                         <?php
                     }
                 }

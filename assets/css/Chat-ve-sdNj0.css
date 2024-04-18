@@ -12,6 +12,10 @@
     display: grid
 }
 
+button{
+    font-family: Cairo, sans-serif;
+}
+
 .Chat-model .body-chat {
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
