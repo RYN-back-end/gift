@@ -1,6 +1,6 @@
 <?php
 require('../system/helper.php');
-checkAdminLogin();
+checkEmployeeLogin();
 
-$_SESSION['admin'] = [];
+$_SESSION['employee'] = [];
 header('Location: login.php');

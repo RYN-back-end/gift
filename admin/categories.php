@@ -27,7 +27,7 @@ if (isset($_GET['method']) && $_GET['method'] == 'DELETE' && isset($_GET['id']))
 
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl" >
 
 <head>
     <meta charset="utf-8"/>
@@ -62,19 +62,19 @@ include 'layout/inc/sidebar.php'
                             <h6 class="text-white text-capitalize ps-3">الأقسام الرئيسية</h6>
                         </div>
                     </div>
-                    <?php echo indexButtons('Add Category') ?>
+                    <?php echo indexButtons('اضافة قسم رئيسي') ?>
                     <div class="card-body px-0 pb-2">
                         <div class="table-responsive p-0">
                             <table class="table align-items-center mb-0">
                                 <thead>
                                 <tr>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        id
+                                        رقم القسم
                                     </th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Name
+                                        الاسم
                                     </th>
-                                    <th class="text-secondary opacity-7">Actions</th>
+                                    <th class="text-secondary opacity-7">العمليات</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -98,7 +98,7 @@ include 'layout/inc/sidebar.php'
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Edit Category</h5>
+                                                        <h5 class="modal-title" id="exampleModalLabel">تعديل القسم الرئيسي</h5>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
@@ -107,16 +107,16 @@ include 'layout/inc/sidebar.php'
                                                             <input name="id" value="<?php echo $row['id'] ?>" type="hidden">
                                                             <div class="col-12">
                                                                 <div class="mb-2">
-                                                                    <label class="form-label">Name</label>
+                                                                    <label class="form-label">الاسم</label>
                                                                     <input class="form-control border-1" type="text" required name="name"
-                                                                           placeholder="Name" value="<?php echo $row['name'] ?>">
+                                                                           placeholder="الاسم" value="<?php echo $row['name'] ?>">
                                                                 </div>
                                                             </div>
                                                         </form>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                        <button type="submit" form="EditForm<?php echo $row['id'] ?>" class="btn btn-primary">Save</button>
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">اغلاق</button>
+                                                        <button type="submit" form="EditForm<?php echo $row['id'] ?>" class="btn btn-primary">حفظ</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -143,7 +143,7 @@ include 'layout/inc/sidebar.php'
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add Category</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">اضافة قسم رئيسي</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -151,16 +151,16 @@ include 'layout/inc/sidebar.php'
                         <input name="method" value="create" type="hidden">
                         <div class="col-12">
                             <div class="mb-2">
-                                <label class="form-label">Name</label>
+                                <label class="form-label">الاسم</label>
                                 <input class="form-control border-1" type="text" required name="name"
-                                       placeholder="Name">
+                                       placeholder="الاسم">
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" form="AddForm" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">اغلاق</button>
+                    <button type="submit" form="AddForm" class="btn btn-primary">حفظ</button>
                 </div>
             </div>
         </div>

@@ -2,8 +2,8 @@
 require('../system/helper.php');
 checkEmployeeLogin();
 
-$selectCategoriesSql = 'SELECT * FROM main_categories order by id DESC';
-$selectCategoriesResult = runQuery($selectCategoriesSql);
+$selectProductsSql = 'SELECT * FROM products order by id DESC';
+$selectProductsResult = runQuery($selectProductsSql);
 
 
 $selectCategoriesSql2 = 'SELECT * FROM main_categories order by id DESC';
@@ -24,13 +24,48 @@ $subCategoriesJson = json_encode($subCategoriesArray);
 
 
 if (isset($_POST['method']) && $_POST['method'] == 'create') {
-    $insertSql = "INSERT INTO `sub_categories`(`name`,`main_id`) VALUES ('{$_POST['name']}','{$_POST['main_id']}')";
+
+    $imagePath = "";
+    if (isset($_FILES['image']) && $_FILES['image']) {
+        $errors = array();
+        $file_name = (time() * 2) . '.jpg';
+        $file_size = $_FILES['image']['size'];
+        $file_tmp = $_FILES['image']['tmp_name'];
+        $file_type = $_FILES['image']['type'];
+        if ($file_size > 2097152) {
+            header("Location: products.php?error=The image size must be less than 2MB");
+        }
+        if (move_uploaded_file($file_tmp, "../uploads/products/" . $file_name)) {
+            $imagePath = "uploads/products/" . $file_name;
+        }
+    }
+
+
+    $insertSql = "INSERT INTO `products`(`title`,`category_id`,`sub_category_id`,`image`,`price`,`qty`,`description`) VALUES ('{$_POST['title']}','{$_POST['category_id']}','{$_POST['sub_category_id']}','{$imagePath}','{$_POST['price']}','{$_POST['qty']}','{$_POST['description']}')";
+
     runQuery($insertSql);
-    header("Location: subCategories.php");
+    header("Location: products.php");
 }
 
 if (isset($_POST['method']) && isset($_POST['id']) && $_POST['method'] == 'edit') {
-    $updateSql = "UPDATE sub_categories SET `name` = '{$_POST['name']}',`main_id`='{$_POST['main_id']}' WHERE `id` = '{$_POST['id']}'";
+    $imagePath = "";
+    if (isset($_FILES['image']) && $_FILES['image']) {
+        $errors = array();
+        $file_name = (time() * 2) . '.jpg';
+        $file_size = $_FILES['image']['size'];
+        $file_tmp = $_FILES['image']['tmp_name'];
+        $file_type = $_FILES['image']['type'];
+        if ($file_size > 2097152) {
+            header("Location: products.php?error=The image size must be less than 2MB");
+        }
+        if (move_uploaded_file($file_tmp, "../uploads/products/" . $file_name)) {
+            $imagePath = "uploads/products/" . $file_name;
+        }
+    }
+
+
+    $updateSql = "UPDATE Set `products`(`title`,`category_id`,`sub_category_id`,`image`,`price`,`qty`,`description`) VALUES ('{$_POST['title']}','{$_POST['category_id']}','{$_POST['sub_category_id']}','{$imagePath}','{$_POST['price']}','{$_POST['qty']}','{$_POST['description']}')";
+
 
     runQuery($updateSql);
     header("Location: subCategories.php");
@@ -38,9 +73,9 @@ if (isset($_POST['method']) && isset($_POST['id']) && $_POST['method'] == 'edit'
 
 if (isset($_GET['method']) && $_GET['method'] == 'DELETE' && isset($_GET['id'])) {
     $deleteID = $_GET['id'];
-    $sql = "DELETE FROM sub_categories WHERE id = '{$deleteID}'";
+    $sql = "DELETE FROM products WHERE id = '{$deleteID}'";
     runQuery($sql);
-    header('Location: subCategories.php');
+    header('Location: products.php');
 }
 
 ?>
@@ -95,20 +130,44 @@ include 'layout/inc/sidebar.php'
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         القسم الرئيسي
                                     </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        القسم الفرعي
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        السعر
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        الوصف
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        الكمية
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        الصورة
+                                    </th>
+
                                     <th class="text-secondary opacity-7">العمليات</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <?php if ($selectSubCategoriesResult->num_rows > 0) {
-                                    while ($row = $selectSubCategoriesResult->fetch_assoc()) {
+                                <?php if ($selectProductsResult->num_rows > 0) {
+                                    while ($row = $selectProductsResult->fetch_assoc()) {
 
-                                        $selectMainCategorySql = "SELECT * FROM main_categories where id = {$row['main_id']}";
-                                        $selectMainCategoryResult = runQuery($selectMainCategorySql);
+                                        $selectProductMainCategorySql = "SELECT * FROM main_categories where id = {$row['category_id']}";
+                                        $selectProductMainCategoryResult = runQuery($selectProductMainCategorySql);
+                                        $selectProductSubCategorySql = "SELECT * FROM sub_categories where id = {$row['sub_category_id']}";
+                                        $selectProductSubCategoryResult = runQuery($selectProductSubCategorySql);
                                         ?>
                                         <tr>
                                             <td><?php echo $row['id'] ?></td>
-                                            <td><?php echo $row['name'] ?></td>
-                                            <td><?php echo $selectMainCategoryResult->fetch_assoc()['name'] ?></td>
+                                            <td><?php echo $row['title'] ?></td>
+                                            <td><?php echo $selectProductMainCategoryResult->fetch_assoc()['name'] ?></td>
+                                            <td><?php echo $selectProductSubCategoryResult->fetch_assoc()['name'] ?></td>
+                                            <td><?php echo $row['price'] ?></td>
+                                            <td><?php echo $row['description'] ?></td>
+                                            <td><?php echo $row['qty'] ?></td>
+                                            <td><img src="../<?php echo $row['image'] ?>"
+                                                     style="width: 100px;height: 80px"></td>
                                             <td>
                                                 <a href="?method=DELETE&id=<?php echo $row['id'] ?>"
                                                    class="btn btn-danger confirmation"><i
@@ -121,7 +180,7 @@ include 'layout/inc/sidebar.php'
 
                                         <div class="modal fade" id="editModal<?php echo $row['id'] ?>" tabindex="-1"
                                              aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
+                                            <div class="modal-dialog modal-xl">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h5 class="modal-title" id="exampleModalLabel">Edit
@@ -136,33 +195,63 @@ include 'layout/inc/sidebar.php'
                                                             <input name="id" value="<?php echo $row['id'] ?>"
                                                                    type="hidden">
                                                             <div class="row">
-                                                                <div class="col-6">
+                                                                <div class="col-3">
                                                                     <div class="mb-2">
-                                                                        <label class="form-label">Name</label>
-                                                                        <input class="form-control border-1" type="text"
-                                                                               required name="name"
-                                                                               placeholder="Name"
-                                                                               value="<?php echo $row['name'] ?>">
+                                                                        <label class="form-label">اسم المنتج</label>
+                                                                        <input class="form-control border-1" type="text" required name="title"
+                                                                               placeholder="اسم المنتج">
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-6">
+                                                                <div class="col-3">
                                                                     <div class="mb-2">
-                                                                        <label class="form-label">Main Category</label>
-                                                                        <select class="form-control" required
-                                                                                name="main_id">
-                                                                            <option value="" selected disabled>Chose
-                                                                                Main Category
-                                                                            </option>
+                                                                        <label class="form-label">السعر</label>
+                                                                        <input class="form-control border-1" type="number" required name="price"
+                                                                               placeholder="السعر">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-3">
+                                                                    <div class="mb-2">
+                                                                        <label class="form-label">الكمية</label>
+                                                                        <input class="form-control border-1" type="number" required name="qty"
+                                                                               placeholder="الكمية">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-3">
+                                                                    <div class="mb-2">
+                                                                        <label class="form-label">القسم الرئيسي</label>
+                                                                        <select class="form-control" required id="category_id_create" name="category_id">
+                                                                            <option value="" selected disabled>اختر القسم الرئيسي</option>
 
-                                                                            <?php if ($selectCategoriesResult->num_rows > 0) {
-                                                                                while ($subRow = $selectCategoriesResult->fetch_assoc()) {
+                                                                            <?php if ($selectCategoriesResult2->num_rows > 0) {
+                                                                                while ($SubRow2 = $selectCategoriesResult2->fetch_assoc()) {
                                                                                     ?>
-                                                                                    <option value="<?php echo $subRow['id'] ?>" <?php echo $subRow['id'] == $row['main_id'] ? 'selected' : '' ?>><?php echo $subRow['name'] ?></option>
+                                                                                    <option value="<?php echo $SubRow2['id'] ?>"><?php echo $SubRow2['name'] ?></option>
                                                                                     <?php
                                                                                 }
                                                                             }
                                                                             ?>
                                                                         </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-3">
+                                                                    <div class="mb-2">
+                                                                        <label class="form-label">القسم الفرعي</label>
+                                                                        <select class="form-control" required id="sub_category_id_create"
+                                                                                name="sub_category_id">
+                                                                            <option value="" selected disabled>اختر القسم الرئيسي اولاً</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <div class="mb-2">
+                                                                        <label class="form-label">الوصف</label>
+                                                                        <textarea name="description" class="form-control" required></textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-3">
+                                                                    <div class="mb-2">
+                                                                        <label class="form-label">الصورة</label>
+                                                                        <input name="image" type="file" class="form-control" required>
                                                                     </div>
                                                                 </div>
 
@@ -207,10 +296,10 @@ include 'layout/inc/sidebar.php'
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="" id="AddForm" method="post">
+                    <form action="" id="AddForm" method="post" enctype="multipart/form-data">
                         <input name="method" value="create" type="hidden">
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-3">
                                 <div class="mb-2">
                                     <label class="form-label">اسم المنتج</label>
                                     <input class="form-control border-1" type="text" required name="title"
@@ -257,19 +346,16 @@ include 'layout/inc/sidebar.php'
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-3">
-                                <div class="mb-2">
-                                    <label class="form-label">القسم الفرعي</label>
-                                    <select class="form-control" required id="sub_category_id_create"
-                                            name="sub_category_id">
-                                        <option value="" selected disabled>اختر القسم الرئيسي اولاً</option>
-                                    </select>
-                                </div>
-                            </div>
                             <div class="col-6">
                                 <div class="mb-2">
                                     <label class="form-label">الوصف</label>
-                                    <textarea name="description" class="form-control" required ></textarea>
+                                    <textarea name="description" class="form-control" required></textarea>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="mb-2">
+                                    <label class="form-label">الصورة</label>
+                                    <input name="image" type="file" class="form-control" required>
                                 </div>
                             </div>
 
@@ -304,7 +390,7 @@ include 'layout/assets/js.php';
             return true;
         });
         if (filteredArray.length > 0) {
-            var newOption = "<option>إختر القسم الفرعي</option>"
+            var newOption = "<option value='' selected disabled>إختر القسم الفرعي</option>"
 
         } else {
             var newOption = "<option>لا يوجد بيانات إختر قسم اخر</option>"

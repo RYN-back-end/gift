@@ -46,21 +46,21 @@ include 'layout/inc/sidebar.php'
                                 <thead>
                                 <tr>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        id
+                                        رقم الطلب
                                     </th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        User
+                                        اسم المستخدم
                                     </th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Status
+                                        حالة الطلب
                                     </th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        date
+                                        تاريخ الطلب
                                     </th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Total
+                                        السعر الكلي
                                     </th>
-                                    <th class="text-secondary opacity-7">Actions</th>
+                                    <th class="text-secondary opacity-7">العمليات</th>
                                 </tr>
                                 </thead>
                                 <tbody>

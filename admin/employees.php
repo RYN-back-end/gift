@@ -37,7 +37,7 @@ if (isset($_GET['method']) && $_GET['method'] == 'DELETE' && isset($_GET['id']))
 
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar"  dir="rtl">
 
 <head>
     <meta charset="utf-8"/>
@@ -53,7 +53,7 @@ if (isset($_GET['method']) && $_GET['method'] == 'DELETE' && isset($_GET['id']))
 
 </head>
 
-<body class="g-sidenav-show  bg-gray-200">
+<body class=class="g-sidenav-show rtl bg-gray-200">
 <?php
 include 'layout/inc/sidebar.php'
 ?>
@@ -72,22 +72,22 @@ include 'layout/inc/sidebar.php'
                             <h6 class="text-white text-capitalize ps-3">الموظفين</h6>
                         </div>
                     </div>
-                    <?php echo indexButtons('Add Employee') ?>
+                    <?php echo indexButtons('اضافة موظف') ?>
                     <div class="card-body px-0 pb-2">
                         <div class="table-responsive p-0">
                             <table class="table align-items-center mb-0">
                                 <thead>
                                 <tr>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        id
+                                        رقم الموظف
                                     </th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Name
+                                        الاسم
                                     </th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Email
+                                        البريد الالكتروني
                                     </th>
-                                    <th class="text-secondary opacity-7">Actions</th>
+                                    <th class="text-secondary opacity-7">العمليات</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -113,8 +113,7 @@ include 'layout/inc/sidebar.php'
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Edit
-                                                            Category</h5>
+                                                        <h5 class="modal-title" id="exampleModalLabel">تعديل موظف</h5>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                                 aria-label="Close"></button>
                                                     </div>
@@ -126,28 +125,28 @@ include 'layout/inc/sidebar.php'
                                                                    type="hidden">
                                                             <div class="col-12">
                                                                 <div class="mb-2">
-                                                                    <label class="form-label">Name</label>
+                                                                    <label class="form-label">الاسم</label>
                                                                     <input class="form-control border-1" type="text"
                                                                            required name="name"
-                                                                           placeholder="Name"
+                                                                           placeholder="الاسم"
                                                                            value="<?php echo $row['name'] ?>">
                                                                 </div>
                                                             </div>
                                                             <div class="col-12">
                                                                 <div class="mb-2">
-                                                                    <label class="form-label">Email</label>
+                                                                    <label class="form-label">البريد الالكتروني</label>
                                                                     <input class="form-control border-1" type="email"
                                                                            required name="email"
-                                                                           placeholder="Email"
+                                                                           placeholder="البريد الالكتروني"
                                                                            value="<?php echo $row['email'] ?>">
                                                                 </div>
                                                             </div>
                                                             <div class="col-12">
                                                                 <div class="mb-2">
-                                                                    <label class="form-label">Password</label>
+                                                                    <label class="form-label">كلمة المرور</label>
                                                                     <input class="form-control border-1" type="password"
                                                                            name="password"
-                                                                           placeholder="Email">
+                                                                           placeholder="كلمة المرور">
                                                                 </div>
                                                             </div>
                                                         </form>
@@ -185,7 +184,7 @@ include 'layout/inc/sidebar.php'
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add Category</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">اضافة موظف</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -193,33 +192,33 @@ include 'layout/inc/sidebar.php'
                         <input name="method" value="create" type="hidden">
                         <div class="col-12">
                             <div class="mb-2">
-                                <label class="form-label">Name</label>
+                                <label class="form-label">الاسم</label>
                                 <input class="form-control border-1" type="text" required name="name"
-                                       placeholder="Name">
+                                       placeholder="الاسم">
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="mb-2">
-                                <label class="form-label">Email</label>
+                                <label class="form-label">البريد الالكتروني</label>
                                 <input class="form-control border-1" type="email"
                                        required name="email"
-                                       placeholder="Email"
+                                       placeholder="البريد الالكتروني"
                                        value="">
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="mb-2">
-                                <label class="form-label">Password</label>
+                                <label class="form-label">كلمة المرور</label>
                                 <input class="form-control border-1" type="password"
                                        name="password" required
-                                       placeholder="Email">
+                                       placeholder="كلمة المرور">
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" form="AddForm" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">اغلاق</button>
+                    <button type="submit" form="AddForm" class="btn btn-primary">حفظ</button>
                 </div>
             </div>
         </div>

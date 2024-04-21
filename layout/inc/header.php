@@ -57,7 +57,7 @@ $selectCategoriesResult = runQuery($selectCategoriesSql);
                         <use xlink:href="#ai:local:arrow-down"></use>
                     </svg>
                     <ul class="dropdown-content round-6 overflow-hidden d-none right-0 absolute" style="height: auto" id="drop-0">
-                        <li class=""><a href="signUp.php" class="fw-500 px-7 py-4 relative"> انشاء حساب</a></li>
+                        <li class=""><a href="register.php" class="fw-500 px-7 py-4 relative"> انشاء حساب</a></li>
                         <li class=""><a href="signIn.php" class="fw-500 px-7 py-4 relative">
                                 تسجيل الدخول
                             </a></li>
