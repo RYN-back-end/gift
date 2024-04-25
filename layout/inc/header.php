@@ -1,9 +1,14 @@
 <?php
 require('system/helper.php');
 
+
 $selectCategoriesSql = 'SELECT * FROM main_categories order by id DESC';
 $selectCategoriesResult = runQuery($selectCategoriesSql);
 
+if (session_status() == PHP_SESSION_NONE) {
+    // If session is not started, start the session
+    session_start();
+}
 ?>
 
 
@@ -38,29 +43,47 @@ $selectCategoriesResult = runQuery($selectCategoriesSql);
         <nav class="d-flex items-center justify-between py-5">
             <ul class="iconList d-flex items-center">
                 <li class="nav-items"><a href="cart.php" class="nav-link mt-3">
-                        <svg width="1em" height="1em" viewBox="0 0 512 512" data-icon="cart2">
-                            <use xlink:href="#ai:local:cart2"></use>
-                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"
+                             width="512" height="512" x="0" y="0" viewBox="0 0 24 24"
+                             style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g>
+                                <path d="M1 1a1 1 0 1 0 0 2h1.78a.694.694 35.784 0 1 .657.474l3.297 9.893c.147.44.165.912.053 1.362l-.271 1.087C6.117 17.41 7.358 19 9 19h12a1 1 0 1 0 0-2H9c-.39 0-.64-.32-.545-.697l.205-.818A.64.64 142.028 0 1 9.28 15H20a1 1 0 0 0 .95-.684l2.665-8A1 1 0 0 0 22.666 5H6.555a.694.694 35.783 0 1-.658-.474l-.948-2.842A1 1 0 0 0 4 1zm7 19a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm12 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"
+                                      paint-order="fill markers stroke" fill="#000000" opacity="1"
+                                      data-original="#000000" class=""></path>
+                            </g></svg>
                     </a></li>
                 <li class="dropdown nav-items pr-8 relative d-flex items-center openDropDown" data-drop="drop-0"><span
-                            class="fw-700 nav-link relative openDropDown"  data-drop="drop-0">
+                            class="fw-700 nav-link relative openDropDown" data-drop="drop-0">
                         <svg width="24" height="24" viewBox="0 0 24 24" class="pr-1 openDropDown" data-drop="drop-0"
                              data-icon="user">  <symbol id="ai:local:user"><path
                                         fill="currentColor"
                                         d="M7.5 6.5C7.5 8.981 9.519 11 12 11s4.5-2.019 4.5-4.5S14.481 2 12 2 7.5 4.019 7.5 6.5M20 21h1v-1c0-3.859-3.141-7-7-7h-4c-3.86 0-7 3.141-7 7v1z"/></symbol><use
                                     xlink:href="#ai:local:user"></use>  </svg> </span>
-                    <svg width="18" height="18" viewBox="0 0 24 24" id="arrowDropDown" class="openDropDown"  data-drop="drop-0" data-icon="arrow-down">
+                    <svg width="18" height="18" viewBox="0 0 24 24" id="arrowDropDown" class="openDropDown"
+                         data-drop="drop-0" data-icon="arrow-down">
                         <symbol id="ai:local:arrow-down">
                             <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                   stroke-width="2" d="m7 10 5 5 5-5"/>
                         </symbol>
                         <use xlink:href="#ai:local:arrow-down"></use>
                     </svg>
-                    <ul class="dropdown-content round-6 overflow-hidden d-none right-0 absolute" style="height: auto" id="drop-0">
-                        <li class=""><a href="register.php" class="fw-500 px-7 py-4 relative"> انشاء حساب</a></li>
-                        <li class=""><a href="signIn.php" class="fw-500 px-7 py-4 relative">
-                                تسجيل الدخول
-                            </a></li>
+                    <ul class="dropdown-content round-6 overflow-hidden d-none right-0 absolute" style="height: auto"
+                        id="drop-0">
+                        <?php
+                        if (isset($_SESSION['user']['id'])){
+                            ?>
+                            <li class=""><a href="orders.php" class="fw-500 px-7 py-4 relative"> طلباتي</a></li>
+                            <li class=""><a href="logout.php" class="fw-500 px-7 py-4 relative">
+                                    تسجيل الخروج
+                                </a></li>
+                            <?php
+                        }else {
+                            ?>
+                            <li class=""><a href="register.php" class="fw-500 px-7 py-4 relative"> انشاء حساب</a></li>
+                            <li class=""><a href="signIn.php" class="fw-500 px-7 py-4 relative">
+                                    تسجيل الدخول
+                                </a></li>
+                            <?php
+                        } ?>
                     </ul>
                 </li>
             </ul>
