@@ -1,7 +1,7 @@
 <?php
 require('system/helper.php');
 checkLogin();
-$selectOrdersSql = "SELECT * FROM `orders` WHERE `user_id` = '{$_SESSION['user']['id']}'";
+$selectOrdersSql = "SELECT * FROM `orders` WHERE `user_id` = '{$_SESSION['user']['id']}' order by id";
 $selectOrdersResult = runQuery($selectOrdersSql);
 $allOrders = [];
 if ($selectOrdersResult->num_rows > 0) {
