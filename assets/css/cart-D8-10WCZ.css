@@ -24,7 +24,7 @@ button{
     height: 35px
 }
 
-.cart .pro-box .form-group button {
+.cart .pro-box .form-group a {
     color: #fff;
     text-align: center;
     background-color: #be3c62;
@@ -35,15 +35,15 @@ button{
     transform: translateY(-50%)
 }
 
-.cart .pro-box .form-group button:hover {
+.cart .pro-box .form-group a:hover {
     background-color: #e56b72
 }
 
-.cart .pro-box .form-group button.more {
+.cart .pro-box .form-group a.more {
     right: -25px
 }
 
-.cart .pro-box .form-group button.mins {
+.cart .pro-box .form-group a.mins {
     left: -25px
 }
 
