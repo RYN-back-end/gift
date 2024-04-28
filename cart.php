@@ -27,19 +27,8 @@ if ($selectCartResult->num_rows > 0) {
 
 
 if (isset($_POST['submit'])) {
-    $insertMain = "INSERT INTO `orders` (`user_id`,`grand_total`,`created_at`)VALUES ('{$_SESSION['user']['id']}','{$selectSumResult->fetch_assoc()['total_sum']}',CURRENT_TIMESTAMP)";
-    runQuery($insertMain);
 
-    $getLastIdSql = "SELECT * FROM `orders` order by id  DESC";
-    $orderId = runQuery($getLastIdSql)->fetch_assoc()['id'];
-    foreach ($allCart as $detail){
-        $netTotal = $detail['qty']*$detail['price'];
-        $insertProducts = "INSERT INTO `order_details` (`order_id`,`product_id`,`qty`,`price`,`net_total`) VALUES ('{$orderId}','{$detail['product_id']}','{$detail['qty']}','{$detail['price']}','{$netTotal}')";
-        runQuery($insertProducts);
-    }
-    $deleteSql = "DELETE FROM cart WHERE `user_id` = '{$_SESSION['user']['id']}'";
-    runQuery($deleteSql);
-    header("LOCATION: payOrder.php?id={$orderId}");
+    header("LOCATION: payOrder.php");
     die();
 }
 
@@ -117,6 +106,8 @@ include 'layout/inc/header.php';
                                 ر.س</p> <!-- totlal  --> </div>
                         <hr>
                         <form action="" method="post" class="d-flex items-center justify-center mx-auto py-10 px-6">
+
+
                             <button class="btn btn-skew round-6" name="submit" value="1" type="submit" style="padding: 15px"
                                     aria-label="ادفع الان">ادفع الان</button>
                         </form> <!--  --> </div> <!-- end right --> </div> <!-- left side -->

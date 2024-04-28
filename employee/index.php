@@ -13,6 +13,22 @@ if (isset($_GET['method']) && $_GET['method'] == 'UPDATE' && isset($_GET['id']) 
     $deleteID = $_GET['id'];
     $sql = "UPDATE `orders` SET `status`= '{$_GET['status']}' WHERE id = '{$_GET['id']}'";
     runQuery($sql);
+
+    if ($_GET['status'] == 'accepted') {
+        $orderDetails = [];
+        $selectOrderDetailsToUpdateSql = "SELECT * FROM `order_details` WHERE `order_id` = '{$_GET['id']}'";
+        $selectOrderDetailsToUpdateResult = runQuery($selectOrderDetailsToUpdateSql);
+        if ($selectOrderDetailsToUpdateResult->num_rows > 0) {
+            while ($orderDetailRow = $selectOrderDetailsToUpdateResult->fetch_assoc()) {
+                $productOldQty = runQuery("SELECT `qty` FROM `products` WHERE `id`='{$orderDetailRow['product_id']}'")->fetch_assoc()['qty'] ?? 0;
+                if ($productOldQty || $productOldQty > $orderDetailRow['qty']) {
+                    $newQty = $productOldQty - $orderDetailRow['qty'];
+                    runQuery("UPDATE `products` SET `qty` = {$newQty} WHERE `id`='{$orderDetailRow['product_id']}'");
+                }
+            }
+        }
+    }
+
     header('Location: index.php');
 }
 ?>
@@ -86,6 +102,12 @@ include 'layout/inc/sidebar.php'
                                         اسم العميل
                                     </th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        رقم الهاتف
+                                    </th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        العنوان
+                                    </th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         حالة الطلب
                                     </th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -107,13 +129,15 @@ include 'layout/inc/sidebar.php'
                                     ?>
                                     <tr>
                                         <td><?php echo $key + 1 ?></td>
-                                        <td><?php echo $user['name'] ?></td>
+                                        <td><?php echo $order['name'] ?></td>
+                                        <td><?php echo $order['phone'] ?></td>
+                                        <td><?php echo $order['address'] ?></td>
                                         <td><?php
                                             if ($order['status'] == 'new') {
                                                 echo "<a href='?method=UPDATE&id={$order['id']}&status=accepted' class='btn btn-success'>قبول</a><a  href='?method=UPDATE&id={$order['id']}&status=refused' class='btn btn-danger'>رفض</a>";
                                             } elseif ($order['status'] == 'accepted') {
                                                 echo "<a href='?method=UPDATE&id={$order['id']}&status=in_progress' class='btn btn-success'>تجهيز</a>";
-                                            }  elseif ($order['status'] == 'in_progress') {
+                                            } elseif ($order['status'] == 'in_progress') {
                                                 echo "<a href='?method=UPDATE&id={$order['id']}&status=on_way' class='btn btn-success'>شحن</a>";
                                             } elseif ($order['status'] == 'on_way') {
                                                 echo "<a href='?method=UPDATE&id={$order['id']}&status=ended' class='btn btn-success'>إنهاء</a>";
@@ -143,7 +167,8 @@ include 'layout/inc/sidebar.php'
                                         <div class="modal-dialog ">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">تفاصيل الطلب رقم <?php echo $order['id']?></h5>
+                                                    <h5 class="modal-title" id="exampleModalLabel">تفاصيل الطلب
+                                                        رقم <?php echo $order['id'] ?></h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                             aria-label="Close"></button>
                                                 </div>
@@ -162,11 +187,19 @@ include 'layout/inc/sidebar.php'
                                                                 $product = runQuery("SELECT * FROM `products` WHERE `id` = '{$orderDetail['product_id']}'")->fetch_assoc();
                                                                 ?>
                                                                 <div class="table-row">
-                                                                    <div class="table-cell"><?php echo $product['title']?></div>
-                                                                    <div class="table-cell"><img style="width: 50px;height: 50px" onclick="window.open(this.src)" src="../<?php echo $product['image']?>"></div>
-                                                                    <div class="table-cell"><?php echo $orderDetail['price']?> ر.س </div>
-                                                                    <div class="table-cell"><?php echo $orderDetail['qty']?>  </div>
-                                                                    <div class="table-cell"><?php echo $orderDetail['net_total']?> ر.س </div>
+                                                                    <div class="table-cell"><?php echo $product['title'] ?></div>
+                                                                    <div class="table-cell"><img
+                                                                                style="width: 50px;height: 50px"
+                                                                                onclick="window.open(this.src)"
+                                                                                src="../<?php echo $product['image'] ?>">
+                                                                    </div>
+                                                                    <div class="table-cell"><?php echo $orderDetail['price'] ?>
+                                                                        ر.س
+                                                                    </div>
+                                                                    <div class="table-cell"><?php echo $orderDetail['qty'] ?>  </div>
+                                                                    <div class="table-cell"><?php echo $orderDetail['net_total'] ?>
+                                                                        ر.س
+                                                                    </div>
                                                                 </div>
                                                                 <?php
                                                             }

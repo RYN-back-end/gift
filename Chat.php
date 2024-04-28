@@ -133,7 +133,7 @@ include 'layout/inc/header.php';
         var Cost = $('#Cost').val();
         var ageSelect = $('#ageSelect').val();
         var url = "https://api.openai.com/v1/chat/completions";
-        var token = "sk-proj-k4vFl7TO69JbmpXdw0WmT3BlbkFJLVLPsvszalOwzLSC4PiT";
+        var token = "sk-proj-yZPJv9brjDPjkKRcsnyLT3BlbkFJeoGoQC0WW6QwcFAG42rS";
 
         var message = `عاوز اقتراح هدية لشخص جنسة ${typeSelect} وعلاقتي به ${relation} وعمرة بمناسبة ${suitable} واهتمامته هى ${interests} بسعر ${Cost} `;
 
@@ -145,7 +145,7 @@ include 'layout/inc/header.php';
             type: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer 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'
+                'Authorization': 'Bearer sk-proj-yZPJv9brjDPjkKRcsnyLT3BlbkFJeoGoQC0WW6QwcFAG42rS'
             },
             data: JSON.stringify({
                 'model': 'gpt-3.5-turbo',

@@ -80,6 +80,12 @@ include 'layout/inc/sidebar.php'
                                         اسم العميل
                                     </th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        رقم الهاتف
+                                    </th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        العنوان
+                                    </th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         حالة الطلب
                                     </th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -101,7 +107,9 @@ include 'layout/inc/sidebar.php'
                                     ?>
                                     <tr>
                                         <td><?php echo $key + 1 ?></td>
-                                        <td><?php echo $user['name'] ?></td>
+                                        <td><?php echo $order['name'] ?></td>
+                                        <td><?php echo $order['phone'] ?></td>
+                                        <td><?php echo $order['address'] ?></td>
                                         <td><?php
                                             if ($order['status'] == 'new') {
                                                 echo 'جديد';
