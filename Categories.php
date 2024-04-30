@@ -47,10 +47,10 @@ include 'layout/inc/header.php';
                 <?php if ($selectOtherProductsResult->num_rows > 0) {
                     while ($row = $selectOtherProductsResult->fetch_assoc()) {
                         ?>
-                        <div class="col-3-lg col-6-md col-12-sm"><a
+                        <div class="col-4-lg col-6-md col-12-sm"><a
                                     href="productDetails.php?id=<?php echo $row['id'] ?>">
-                                <div class="card round-8 d-flex">
-                                    <div class="top mx-auto"><img src="<?php echo $row['image'] ?>"
+                                <div class="card AE_card relative round-8 d-flex overflow-hidden">
+                                    <div class="top mx-auto  " style="height: 276px;padding: 12px;width: 50%"><img src="<?php echo $row['image'] ?>"
                                                                   alt="img for product" class="img-cover" width="450"
                                                                   height="450" loading="lazy" decoding="async"></div>
                                     <div class="body mr-1">
